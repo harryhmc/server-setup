@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+    reverse-proxy:
+        build: ./reverse-proxy
+        image: reverse-proxy
+        ports:
+            - 8080:80
+            - 443:443
+        restart: always
+        depends_on:
+          - alice
+          - bob
+
+    alice:
+        build: ./greeter
+        environment:
+          - NAME=Alice
+        image: greeter
+        restart: always
+
+    bob:
+        build: ./greeter
+        environment:
+          - NAME=Bob
+        image: greeter
+        restart: always
