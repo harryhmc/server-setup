@@ -1,8 +1,6 @@
 install:
 	cd docker/greeter; \
 	npm install
-# docker install steps
-# terraform install steps
 
 build:
 	cd docker; \
@@ -21,4 +19,6 @@ unit-test:
 	npm test
 
 int-test: build up;\
-	echo ""
+	cd integration-tests;\
+	pip3 install pytest;\
+	python3 -m "pytest"

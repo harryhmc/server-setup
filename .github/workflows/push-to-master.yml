@@ -1,0 +1,29 @@
+name: push-to-master
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+    - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: make install
+      - run: make unit-test
+  smoketests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: make int-test
+      - run: make down
+  # TODO: implement terraform deployment logic
+  # deploy:
+  #   needs: [ build, smoketests ]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: terraform steps
