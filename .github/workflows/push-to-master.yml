@@ -18,13 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: make build
-      - run: make up
       - run: make int-test
       - run: make down
-  deploy:
-    needs: [ build, smoketests ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: terraform steps
+  # TODO: implement terraform deployment logic
+  # deploy:
+  #   needs: [ build, smoketests ]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: terraform steps
