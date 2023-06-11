@@ -1,0 +1,27 @@
+name: push-to-master
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+    - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: make install
+      - run: make unit-test
+      - run: make build
+  smoketests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: make up
+      - run: make int-test
+      - run: make down
+  deploy:
+    needs: [ build, smoketests ]
+    runs-on: ubuntu-latest
+    steps:
+      - run: terraform steps
